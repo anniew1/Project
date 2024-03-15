@@ -1,4 +1,6 @@
 public class Player {
+
+    //board
     String[][] board = {
             {"__________"},
             {"__________"},
