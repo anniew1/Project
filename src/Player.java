@@ -6,11 +6,16 @@ public class Player {
     Water[][] shipBoard = new Water[10][10];
     Scanner scan;
 
+    Weapon weapon;
+    Bomb bomb;
+
     public Player(String name) {
         this.name = name;
         scan = new Scanner(System.in);
         setupBoard();
         placeShip();
+        weapon = new Weapon(1, "weapon");
+        bomb = new Bomb(3, "bomb");
     }
 
     // prints out the board with the ships
@@ -88,4 +93,24 @@ public class Player {
         }
         return true;
     }
+
+    private void attack(){
+        if(bomb.getInventory() > 0) {
+            System.out.println("You have " + bomb.getInventory() + " bombs remaining");
+            System.out.print("Would you like to use a bomb? (y/n) ");
+            String choice = scan.nextLine();
+            System.out.println();
+            if(choice.equals("y")){
+                System.out.print("Which row would you like to hit?");
+                int r = scan.nextInt();
+                System.out.print("Which column would you like to hit?");
+                int c = scan.nextInt();
+            } else {
+
+            }
+        } else {
+
+        }
+    }
+
 }
