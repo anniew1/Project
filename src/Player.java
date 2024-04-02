@@ -101,6 +101,13 @@ public class Player {
                 int r = scan.nextInt();
                 System.out.print("Which column would you like to hit?");
                 int c = scan.nextInt();
+                if(c == 1){
+                    if(shipBoard[r][1].getSymbol().equals(""))
+                } else if (c == 10){
+
+                } else {
+
+                }
             } else {
 
             }
