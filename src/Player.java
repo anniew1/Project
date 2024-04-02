@@ -95,27 +95,66 @@ public class Player {
     }
 
     private void attack(){
+        Water shipFound = new Water("\uD83D\uDEA2");
+        Water nothingFound = new Water("❌");
         if(bomb.getInventory() > 0) {
             System.out.println("You have " + bomb.getInventory() + " bombs remaining");
             System.out.print("Would you like to use a bomb? (y/n) ");
             String choice = scan.nextLine();
             System.out.println();
             if(choice.equals("y")){
+                bomb.setInventory(bomb.getInventory() - 1);
                 System.out.print("Which row would you like to hit?");
                 int r = scan.nextInt();
                 System.out.print("Which column would you like to hit?");
                 int c = scan.nextInt();
+                //implementation which changes the board accordingly
                 if(c == 1){
-                    if(shipBoard[r][1].getSymbol().equals(""))
+                    for(int i = 0; i < c; i++){
+                        if(shipBoard[r][i].getSymbol().equals("\uD83D\uDEA2")){
+                            board[r][i] = shipFound;
+                        } else {
+                            board[r][i] = nothingFound;
+                        }
+                    }
                 } else if (c == 10){
-
+                    for(int j = 9; j >= c - 3; j--){
+                        if(shipBoard[r][j].getSymbol().equals("\uD83D\uDEA2")){
+                            board[r][j] = shipFound;
+                        } else {
+                            board[r][j] = nothingFound;
+                        }
+                    }
                 } else {
-
+                    for(int k = c - 1; k <= c + 1; k++){
+                        if(shipBoard[r][k].getSymbol().equals("\uD83D\uDEA2")){
+                            board[r][k] = shipFound;
+                        } else {
+                            board[r][k] = nothingFound;
+                        }
+                    }
                 }
             } else {
-
+                System.out.print("Which row would you like to hit?");
+                int r = scan.nextInt();
+                System.out.print("Which column would you like to hit?");
+                int c = scan.nextInt();
+                if(shipBoard[r][c].getSymbol().equals("\uD83D\uDEA2")){
+                    board[r][c] = shipFound;
+                } else {
+                    board[r][c] = nothingFound;
+                }
             }
         } else {
+            System.out.print("Which row would you like to hit?");
+            int r = scan.nextInt();
+            System.out.print("Which column would you like to hit?");
+            int c = scan.nextInt();
+            if(shipBoard[r][c].getSymbol().equals("\uD83D\uDEA2")){
+                board[r][c] = shipFound;
+            } else {
+                board[r][c] = nothingFound;
+            }
 
         }
     }
