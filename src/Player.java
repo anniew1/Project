@@ -31,14 +31,13 @@ public class Player {
     // places the ships
     private void addShips(int shipRow, int shipCol, String direction, int length) {
         for (int i = 0; i < length; i++) {
-            if (direction.equals("vertical")) {
-                shipBoard[shipRow + i][shipCol] = new Ship("0");
+            if (direction.equals("v")) {
+                shipBoard[shipRow + i][shipCol] = new Ship("\uD83D\uDEA2");
             } else {
-                shipBoard[shipRow][shipCol + i] = new Ship("0");
+                shipBoard[shipRow][shipCol + i] = new Ship("\uD83D\uDEA2");
             }
         }
     }
-
 
     //asks the player to place ships
     private void placeShip() {
@@ -50,7 +49,7 @@ public class Player {
             System.out.print("Where would you like to place ship " + (i + 1) + " (col): ");
             int shipCol = Integer.parseInt(scan.nextLine()) - 1;
 
-            System.out.print("What direction would you want it to go (horizontal/vertical): ");
+            System.out.print("What direction would you want it to go (h/v): ");
             String direction = scan.nextLine();
 
             if (checkValid(shipRow, shipCol, direction, i + 1)) {
@@ -68,16 +67,21 @@ public class Player {
     private void setupBoard() {
         for(int r = 0; r < board.length; r++) {
             for(int c = 0; c  < board[0].length; c++) {
-                board[r][c] = new Water("_");
-                shipBoard[r][c] = new Water("_");
+                board[r][c] = new Water("\uD83D\uDCA7");
+                shipBoard[r][c] = new Water("\uD83D\uDCA7");
             }
         }
     }
 
     //checks to see if a ship can be placed
     private Boolean checkValid(int row, int col, String direction, int length) {
+
         for (int i = 0; i < length; i++) {
-            if (direction.equals("horizontal")) {
+            if (row > 10 || col > 10) {
+                return false;
+            }
+
+            if (direction.equals("h")) {
                 if ((shipBoard[row][col + i] instanceof Ship)) {
                     return false;
                 }
