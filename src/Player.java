@@ -181,6 +181,6 @@ public class Player {
                 enemy.board[r][c] = nothingFound;
             }
         }
-    }
+    } //
 
 }
