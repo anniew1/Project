@@ -1,3 +1,4 @@
+import java.lang.String;
 public class Weapon {
     private int spaces;
     private String name;

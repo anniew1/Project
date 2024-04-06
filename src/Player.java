@@ -8,6 +8,8 @@ public class Player {
 
     Weapon weapon;
     Bomb bomb;
+    public boolean found = false;
+    public int bombLeft;
 
     public Player(String name) {
         this.name = name;
@@ -16,11 +18,28 @@ public class Player {
         placeShip();
         weapon = new Weapon(1, "weapon");
         bomb = new Bomb(3, "bomb");
+        bombLeft = bomb.getInventory();
     }
 
     // returns the name of the player
     public String getName() {
         return name;
+    }
+
+    public int getBombLeft(){
+        return bombLeft;
+    }
+
+    public Boolean getFound(){
+        return found;
+    }
+
+    public void setFound(boolean b){
+        found = b;
+    }
+
+    public void setBombLeft(int num){
+        bombLeft = num;
     }
 
     // prints out the given board
@@ -35,18 +54,6 @@ public class Player {
         }
     }
 
-    // checks whether a person has eliminated all ships
-    public Boolean victory() {
-        for (Water[] row : shipBoard) {
-            for (Water col : row) {
-                if (col instanceof Ship) {
-                    return false;
-                }
-            }
-        }
-        System.out.println("You are the winner!!!");
-        return true;
-    }
 
 
     // places the ships
@@ -118,69 +125,79 @@ public class Player {
         return true;
     }
 
-    public void attack(Player enemy){
+
+    public void attack(Player other){
         Water shipFound = new Water("\uD83D\uDD25");
         Water nothingFound = new Water("❌");
-        if(bomb.getInventory() > 0) {
-            System.out.println("You have " + bomb.getInventory() + " bombs remaining");
+        System.out.println("You have " + other.getBombLeft() + " bombs remaining");
+        if(other.getBombLeft() > 0) {
             System.out.print("Would you like to use a bomb? (y/n): ");
             String choice = scan.nextLine();
             System.out.println();
 
             if(choice.equals("y")){
-                bomb.setInventory(bomb.getInventory() - 1);
-                System.out.print("Which row would you like to hit?");
-                int r = scan.nextInt() - 1;
-                System.out.print("Which column would you like to hit?");
-                int c = scan.nextInt() - 1;
-                //implementation which changes the board accordingly
-                if(c == 1){
-                    for(int i = 0; i < c; i++){
+                other.setBombLeft(other.getBombLeft() - 1);
+                //bomb.setInventory(bomb.getInventory() - 1);
+                System.out.print("Would you like to wipe out a row or column? (r or c) ");
+                String wipeOut = scan.nextLine();
+                //option yes
+                if(wipeOut.equals("r")){
+                    System.out.print("Which row would you like to hit? ");
+                    int r = scan.nextInt() - 1;
+                    scan.nextLine();
+                    for(int i = 0; i < board[0].length; i++){
                         if(shipBoard[r][i].getSymbol().equals("\uD83D\uDEA2")){
-                            enemy.board[r][i] = shipFound;
+                            board[r][i] = shipFound;
+                            other.setFound(true);
                         } else {
-                            enemy.board[r][i] = nothingFound;
-                        }
-                    }
-                } else if (c == 10){
-                    for(int j = 9; j >= c - 3; j--){
-                        if(shipBoard[r][j].getSymbol().equals("\uD83D\uDEA2")){
-                            enemy.board[r][j] = shipFound;
-                        } else {
-                            enemy.board[r][j] = nothingFound;
-                        }
-                    }
-                } else {
-                    for(int k = c - 1; k <= c + 1; k++){
-                        if(shipBoard[r][k].getSymbol().equals("\uD83D\uDEA2")){
-                            enemy.board[r][k] = shipFound;
-                        } else {
-                            enemy.board[r][k] = nothingFound;
+                            board[r][i] = nothingFound;
                         }
                     }
                 }
+                if (wipeOut.equals("c")){
+                    System.out.print("Which column would you like to hit? ");
+                    int c = scan.nextInt() - 1;
+                    scan.nextLine();
+                    for(int j = 0; j < 10; j++){
+                        if(shipBoard[j][c].getSymbol().equals("\uD83D\uDEA2")){
+                            board[j][c] = shipFound;
+                            other.setFound(true);
+                        } else {
+                            board[j][c] = nothingFound;
+                        }
+                    }
+                }
+
+                //option no
             } else {
-                System.out.print("Which row would you like to hit?");
+                System.out.print("Which row would you like to hit? ");
                 int r = scan.nextInt();
-                System.out.print("Which column would you like to hit?");
+                scan.nextLine();
+                System.out.print("Which column would you like to hit? ");
                 int c = scan.nextInt();
-                if(shipBoard[r][c].getSymbol().equals("\uD83D\uDEA2")){
-                    enemy.board[r][c] = shipFound;
+                scan.nextLine();
+                if(shipBoard[r-1][c-1].getSymbol().equals("\uD83D\uDEA2")){
+                    board[r-1][c-1] = shipFound;
+                    other.setFound(true);
                 } else {
-                    enemy.board[r][c] = nothingFound;
+                    board[r-1][c-1] = nothingFound;
                 }
             }
         } else {
-            System.out.print("Which row would you like to hit?");
+            System.out.print("Which row would you like to hit? ");
             int r = scan.nextInt();
-            System.out.print("Which column would you like to hit?");
+            scan.nextLine();
+            System.out.print("Which column would you like to hit? ");
             int c = scan.nextInt();
-            if(shipBoard[r][c].getSymbol().equals("\uD83D\uDEA2")){
-                enemy.board[r][c] = shipFound;
+            scan.nextLine();
+            if(shipBoard[r-1][c-1].getSymbol().equals("\uD83D\uDEA2")){
+                board[r-1][c-1] = shipFound;
+                other.setFound(true);
             } else {
-                enemy.board[r][c] = nothingFound;
+                board[r-1][c-1] = nothingFound;
             }
         }
-    } //
+
+    }
 
 }

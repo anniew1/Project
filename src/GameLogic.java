@@ -11,7 +11,7 @@ public class GameLogic {
         gameOver = false;
     }
     public void startGame() {
-        System.out.println("Basic Info: \n-A bomb hits 3 random spots in a row\n-A normal hit affects 1 spot\n-If you attack a spot more than once, nothing happens");
+        System.out.println("Basic Info: \n-A bomb hits 10 spots in a row\n-A normal hit affects 1 spot\n-If you attack a spot more than once, nothing happens");
         System.out.println();
         System.out.print("Player 1's Name: ");
         p1 = new Player(scan.nextLine());
@@ -21,7 +21,18 @@ public class GameLogic {
 
         while (!gameOver) {
             takeTurn(p1, p2);
-            takeTurn(p2, p1);
+            if(!p1.getFound()) {
+                takeTurn(p2, p1);
+                if(p2.getFound()){
+                    System.out.println();
+                    System.out.println(p2.getName() + " wins!!!!!!!");
+                    gameOver = true;
+                }
+            } else {
+                System.out.println();
+                System.out.println(p1.getName() + " wins!!!!!!!");
+                gameOver = true;
+            }
         }
 
     }
@@ -31,7 +42,7 @@ public class GameLogic {
         System.out.println(current.getName() + "'s Turn: ");
         System.out.println("Enemy's Board: ");
         enemy.printBoard(enemy.board);
-        current.attack(enemy);
+        enemy.attack(current);
         enemy.printBoard(enemy.board);
     }
 
