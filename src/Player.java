@@ -167,6 +167,7 @@ public class Player {
                         }
                     }
                 }
+                bomb.printSound();
 
                 //option no
             } else {
@@ -182,6 +183,7 @@ public class Player {
                 } else {
                     board[r-1][c-1] = nothingFound;
                 }
+                weapon.printSound();
             }
         } else {
             System.out.print("Which row would you like to hit? ");
@@ -196,6 +198,7 @@ public class Player {
             } else {
                 board[r-1][c-1] = nothingFound;
             }
+            weapon.printSound();
         }
 
     }
