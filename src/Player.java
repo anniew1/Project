@@ -8,7 +8,6 @@ public class Player {
 
     Weapon weapon;
     Bomb bomb;
-    public boolean found = false;
     public int bombLeft;
 
     public Player(String name) {
@@ -30,14 +29,6 @@ public class Player {
         return bombLeft;
     }
 
-    public Boolean getFound(){
-        return found;
-    }
-
-    public void setFound(boolean b){
-        found = b;
-    }
-
     public void setBombLeft(int num){
         bombLeft = num;
     }
@@ -53,8 +44,6 @@ public class Player {
             System.out.println();
         }
     }
-
-
 
     // places the ships
     private void addShips(int shipRow, int shipCol, String direction, int length) {
@@ -77,8 +66,11 @@ public class Player {
             System.out.print("Where would you like to place ship " + (i + 1) + " (col): ");
             int shipCol = Integer.parseInt(scan.nextLine()) - 1;
 
-            System.out.print("What direction would you want it to go (h/v): ");
-            String direction = scan.nextLine();
+            String direction = "h";
+            if (i != 0) {
+                System.out.print("What direction would you want it to go (h/v): ");
+                direction = scan.nextLine();
+            }
 
             if (checkValid(shipRow, shipCol, direction, i + 1)) {
                 addShips(shipRow, shipCol, direction, i + 1);
@@ -125,6 +117,16 @@ public class Player {
         return true;
     }
 
+    public Boolean victory() {
+        for (Water[] row : shipBoard) {
+            for (Water col : row) {
+                if (col instanceof Ship) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public void attack(Player other){
         Water shipFound = new Water("\uD83D\uDD25");
@@ -148,7 +150,7 @@ public class Player {
                     for(int i = 0; i < board[0].length; i++){
                         if(shipBoard[r][i].getSymbol().equals("\uD83D\uDEA2")){
                             board[r][i] = shipFound;
-                            other.setFound(true);
+                            shipBoard[r][i] = shipFound;
                         } else {
                             board[r][i] = nothingFound;
                         }
@@ -161,7 +163,7 @@ public class Player {
                     for(int j = 0; j < 10; j++){
                         if(shipBoard[j][c].getSymbol().equals("\uD83D\uDEA2")){
                             board[j][c] = shipFound;
-                            other.setFound(true);
+                            shipBoard[j][c] = shipFound;
                         } else {
                             board[j][c] = nothingFound;
                         }
@@ -179,7 +181,7 @@ public class Player {
                 scan.nextLine();
                 if(shipBoard[r-1][c-1].getSymbol().equals("\uD83D\uDEA2")){
                     board[r-1][c-1] = shipFound;
-                    other.setFound(true);
+                    shipBoard[r-1][c-1] = shipFound;
                 } else {
                     board[r-1][c-1] = nothingFound;
                 }
@@ -194,7 +196,7 @@ public class Player {
             scan.nextLine();
             if(shipBoard[r-1][c-1].getSymbol().equals("\uD83D\uDEA2")){
                 board[r-1][c-1] = shipFound;
-                other.setFound(true);
+                shipBoard[r-1][c-1] = shipFound;
             } else {
                 board[r-1][c-1] = nothingFound;
             }

@@ -20,21 +20,26 @@ public class GameLogic {
         p2 = new Player(scan.nextLine());
 
         while (!gameOver) {
-            takeTurn(p1, p2);
-            if(!p1.getFound()) {
+            if (!p1.victory() && !gameOver) {
+                takeTurn(p1, p2);
+            }
+
+            if (p1.victory()) {
+                System.out.println();
+                System.out.println(p2.getName() + " wins!!!!!!!");
+                gameOver = true;
+            }
+
+            if(!p2.victory() && !gameOver) {
                 takeTurn(p2, p1);
-                if(p2.getFound()){
-                    System.out.println();
-                    System.out.println(p2.getName() + " wins!!!!!!!");
-                    gameOver = true;
-                }
-            } else {
+            }
+
+            if(p2.victory()) {
                 System.out.println();
                 System.out.println(p1.getName() + " wins!!!!!!!");
                 gameOver = true;
             }
         }
-
     }
 
     // prints out and does the actions for a player to attack
