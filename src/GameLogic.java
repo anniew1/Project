@@ -11,7 +11,10 @@ public class GameLogic {
         gameOver = false;
     }
     public void startGame() {
-        System.out.println("Basic Info: \n-A bomb hits 10 spots in a row\n-A normal hit affects 1 spot\n-If you attack a spot more than once, nothing happens");
+        String[] rules = {"Basic Info: ", "-A bomb hits 10 spots in a row", "-A normal hit affects 1 spot", "-If you attack a spot more than once, nothing happens"};
+        for(String s : rules){
+            System.out.println(s);
+        }
         System.out.println();
         System.out.print("Player 1's Name: ");
         p1 = new Player(scan.nextLine());
