@@ -1,3 +1,4 @@
+import java.io.StringBufferInputStream;
 import java.util.Scanner;
 public class GameLogic {
 
@@ -13,11 +14,15 @@ public class GameLogic {
     public void startGame() {
         System.out.println("Basic Info: \n-A bomb hits 10 spots in a row\n-A normal hit affects 1 spot\n-If you attack a spot more than once, nothing happens");
         System.out.println();
+
+        System.out.print("How many ships would you like: ");
+        int numShips = (Integer.parseInt(scan.nextLine()));
+
         System.out.print("Player 1's Name: ");
-        p1 = new Player(scan.nextLine());
+        p1 = new Player(scan.nextLine(), numShips);
 
         System.out.print("Player 2's Name: ");
-        p2 = new Player(scan.nextLine());
+        p2 = new Player(scan.nextLine(), numShips);
 
         while (!gameOver) {
             if (!p1.victory() && !gameOver) {

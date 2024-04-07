@@ -10,11 +10,11 @@ public class Player {
     Bomb bomb;
     public int bombLeft;
 
-    public Player(String name) {
+    public Player(String name, int numShips) {
         this.name = name;
         scan = new Scanner(System.in);
         setupBoard();
-        placeShip();
+        placeShip(numShips);
         weapon = new Weapon(1, "weapon");
         bomb = new Bomb(3, "bomb");
         bombLeft = bomb.getInventory();
@@ -57,9 +57,9 @@ public class Player {
     }
 
     //asks the player to place ships
-    private void placeShip() {
+    private void placeShip(int numShips) {
         System.out.println("Ship # = how much spaces (Ship 1 = 1 space long, Ship 2 = 2 spaces long, etc.)");
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < numShips; i++) {
             System.out.print("Where would you like to place ship " + (i + 1) + " (row): ");
             int shipRow = Integer.parseInt(scan.nextLine()) - 1;
 
